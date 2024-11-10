@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amor Flotante</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: radial-gradient(circle, #000428, #004e92);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .corazon {
+            position: absolute;
+            animation: flotar 4s linear forwards;
+            color: #ff69b4;
+            opacity: 0.8;
+            text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.5);
+        }
+        
+        @keyframes flotar {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            30% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1.2);
+                opacity: 0;
+            }
+        }
+        
+        .texto {
+            position: absolute;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 28px;
+            text-align: center;
+            z-index: 1;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Reproductor de música -->
+    <audio id="musica" src="INTERLUDE.mp3" loop></audio>
+
+    <div class="texto">mientras más tiempo estoy contigo<br>más te amo</div>
+
+    <script>
+        const audio = document.getElementById('musica');
+
+        // Evento para comenzar la música después del clic
+        document.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play().then(() => {
+                    // Establecer el tiempo solo después de que comience la reproducción
+                    audio.currentTime = 19;
+                }).catch(err => {
+                    console.error("Error al reproducir el audio:", err);
+                });
+            }
+        });
+
+        function crearCorazon() {
+            const corazon = document.createElement('div');
+            corazon.className = 'corazon';
+            corazon.style.left = Math.random() * 100 + 'vw';
+            corazon.innerHTML = '❤';
+            corazon.style.fontSize = (Math.random() * 80 + 80) + 'px';
+            corazon.style.filter = `hue-rotate(${Math.random() * 360}deg)`;
+            corazon.style.animationDuration = (Math.random() * 2 + 3) + 's';
+
+            document.body.appendChild(corazon);
+
+            corazon.addEventListener('animationend', () => {
+                corazon.remove();
+            });
+        }
+
+        // Crear corazones en intervalos aleatorios
+        setInterval(crearCorazon, 400);
+
+        // Crear grupo inicial de corazones
+        for (let i = 0; i < 15; i++) {
+            setTimeout(crearCorazon, Math.random() * 2000);
+        }
+    </script>
+</body>
+
+</html>
